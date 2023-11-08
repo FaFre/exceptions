@@ -1,6 +1,6 @@
 name: exceptions
 description: This package helps catching and handling occuring Exceptions by producing a single result that either contains an error or value.
-version: 0.1.0
+version: 0.2.0
 repository: https://github.com/FaFre/exceptions
 
 environment:
