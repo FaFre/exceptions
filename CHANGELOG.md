@@ -1,3 +1,7 @@
+## 0.3.0
+
+- Added `when()`
+
 ## 0.2.0
 
 - Upgraded dependencies

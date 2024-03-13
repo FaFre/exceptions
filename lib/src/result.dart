@@ -64,7 +64,7 @@ class Result<T> with FastEquatable {
   List<Object?> get hashParameters => [_value, error];
 }
 
-extension ResulExtensions<T> on Result<T> {
+extension ResultExtensions<T> on Result<T> {
   Result<R> map<R>(R Function(T? value) onSuccess,
       {ExceptionHandler? exceptionHandler, String? errorGroup}) {
     if (!success) {
@@ -83,5 +83,16 @@ extension ResulExtensions<T> on Result<T> {
 
     return Result.fromAsync(() => onSuccess(value),
         exceptionHandler: exceptionHandler, errorGroup: errorGroup);
+  }
+
+  R when<R>({
+    required R Function(T? value) onSuccess,
+    required R Function(ErrorMessage errorMessage) onError,
+  }) {
+    if (success) {
+      return onSuccess(value);
+    } else {
+      return onError(error!);
+    }
   }
 }
