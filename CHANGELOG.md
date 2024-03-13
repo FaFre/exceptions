@@ -1,6 +1,7 @@
 ## 0.3.0
 
 - Added `when()`
+- Added documentation
 
 ## 0.2.0
 
