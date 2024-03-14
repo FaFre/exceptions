@@ -83,7 +83,7 @@ class Result<T> with FastEquatable {
 /// Extension on [Result] to provide additional functionalities.
 extension ResultExtensions<T> on Result<T> {
   /// Maps a [Result<T>] to [Result<R>] using the provided function. If the original result is a failure, the same error is retained.
-  Result<R> map<R>(R Function(T? value) onSuccess,
+  Result<R> map<R>(R Function(T value) onSuccess,
       {ExceptionHandler? exceptionHandler, String? errorGroup}) {
     if (!success) {
       return Result.error(error!);
@@ -94,7 +94,7 @@ extension ResultExtensions<T> on Result<T> {
   }
 
   /// Similar to [map], but for asynchronous operations. Maps a [Result<T>] to [FutureOr<Result<R>>].
-  FutureOr<Result<R>> mapAsync<R>(Future<R> Function(T? value) onSuccess,
+  FutureOr<Result<R>> mapAsync<R>(Future<R> Function(T value) onSuccess,
       {ExceptionHandler? exceptionHandler, String? errorGroup}) {
     if (!success) {
       return Result.error(error!);
@@ -106,7 +106,7 @@ extension ResultExtensions<T> on Result<T> {
 
   /// Allows handling the success and error cases of a [Result] separately.
   R when<R>({
-    required R Function(T? value) onSuccess,
+    required R Function(T value) onSuccess,
     required R Function(ErrorMessage errorMessage) onError,
   }) {
     if (success) {
