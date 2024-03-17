@@ -1,10 +1,6 @@
-/// Support for doing something awesome.
-///
-/// More dartdocs go here.
+/// This package assists in catching and handling exceptions that occur, producing a single result that contains either an error or a value.
 library exceptions;
 
-export 'src/result.dart';
 export 'src/data/error_message.dart';
 export 'src/data/result_exception.dart';
-
-// TODO: Export any libraries intended for clients of this package.
+export 'src/result.dart';

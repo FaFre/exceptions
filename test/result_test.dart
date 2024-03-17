@@ -4,10 +4,10 @@ import 'package:test/test.dart';
 void main() {
   group('constructor', () {
     test('with error', () {
-      final error = ErrorMessage(source: 't', message: 'm');
-      final result = Result.error(error);
+      const error = ErrorMessage(source: 't', message: 'm');
+      const result = Result.failure(error);
 
-      expect(result.success, isFalse);
+      expect(result.isSuccess, isFalse);
       expect(result.error, equals(error));
       expect(result.value, isNull);
       expect(result.valueOrNull, isNull);
@@ -15,10 +15,10 @@ void main() {
     });
 
     test('with error non-null type', () {
-      final error = ErrorMessage(source: 't', message: 'm');
-      final result = Result<int>.error(error);
+      const error = ErrorMessage(source: 't', message: 'm');
+      const result = Result<int>.failure(error);
 
-      expect(result.success, isFalse);
+      expect(result.isSuccess, isFalse);
       expect(result.error, equals(error));
       expect(() => result.value, throwsA(isA<TypeError>()));
       expect(result.valueOrNull, isNull);
@@ -26,9 +26,9 @@ void main() {
     });
 
     test('with value', () {
-      final result = Result.value(1);
+      const result = Result.success(1);
 
-      expect(result.success, isTrue);
+      expect(result.isSuccess, isTrue);
       expect(result.error, isNull);
       expect(result.value, equals(1));
       expect(result.valueOrNull, equals(1));
@@ -44,17 +44,17 @@ void main() {
 
     test('from with error', () {
       final result = Result.from(() => throw Exception());
-      expect(result.success, isFalse);
+      expect(result.isSuccess, isFalse);
     });
 
     test('from with error handler', () {
       final result = Result.from(
         () => throw Exception(),
         exceptionHandler: (exception, stackTrace) =>
-            ErrorMessage(source: 'source', message: 'handled'),
+            const ErrorMessage(source: 'source', message: 'handled'),
       );
 
-      expect(result.success, isFalse);
+      expect(result.isSuccess, isFalse);
       expect(result.error!.message, 'handled');
     });
 
@@ -64,7 +64,7 @@ void main() {
         exceptionHandler: (exception, stackTrace) => null,
       );
 
-      expect(result.success, isFalse);
+      expect(result.isSuccess, isFalse);
       expect(result.error!.details, isException);
     });
 
@@ -74,31 +74,32 @@ void main() {
         errorGroup: '1',
       );
 
-      expect(result.success, isFalse);
+      expect(result.isSuccess, isFalse);
       expect(result.error!.source, equals('1'));
     });
   });
 
   group('async factory', () {
     test('from with value', () async {
-      final result = await Result.fromAsync(() async =>
-          Future.delayed(const Duration(seconds: 1)).then((_) => 1));
+      final result = await Result.fromAsync(
+        () async => Future.delayed(const Duration(seconds: 1)).then((_) => 1),
+      );
       expect(result.value, equals(1));
     });
 
     test('from with error', () async {
       final result = await Result.fromAsync(() => throw Exception());
-      expect(result.success, isFalse);
+      expect(result.isSuccess, isFalse);
     });
 
     test('from with error handler', () async {
       final result = await Result.fromAsync(
         () => throw Exception(),
         exceptionHandler: (exception, stackTrace) =>
-            ErrorMessage(source: 'source', message: 'handled'),
+            const ErrorMessage(source: 'source', message: 'handled'),
       );
 
-      expect(result.success, isFalse);
+      expect(result.isSuccess, isFalse);
       expect(result.error!.message, 'handled');
     });
 
@@ -108,7 +109,7 @@ void main() {
         exceptionHandler: (exception, stackTrace) => null,
       );
 
-      expect(result.success, isFalse);
+      expect(result.isSuccess, isFalse);
       expect(result.error!.details, isException);
     });
 
@@ -118,7 +119,7 @@ void main() {
         errorGroup: '1',
       );
 
-      expect(result.success, isFalse);
+      expect(result.isSuccess, isFalse);
       expect(result.error!.source, equals('1'));
     });
   });

@@ -1,34 +1,44 @@
-import 'package:fast_equatable/fast_equatable.dart';
-
-class ErrorMessage with FastEquatable {
+class ErrorMessage {
   final String? source;
   final String message;
 
   final dynamic details;
   final StackTrace? stackTrace;
 
-  ErrorMessage(
-      {required this.source,
-      required this.message,
-      this.details,
-      this.stackTrace});
+  const ErrorMessage({
+    required this.source,
+    required this.message,
+    this.details,
+    this.stackTrace,
+  });
 
-  factory ErrorMessage.fromException(Exception e, StackTrace? s,
-          {String? source, dynamic details}) =>
-      ErrorMessage(
+  ErrorMessage.fromException(
+    Exception e,
+    StackTrace? s, {
+    String? source,
+    dynamic details,
+  }) : this(
           source: source,
           message: e.toString(),
           details: details ?? e,
-          stackTrace: s);
+          stackTrace: s,
+        );
 
   @override
-  bool get cacheHash => true;
-
-  @override
-  List<Object?> get hashParameters => [source, message, details];
+  int get hashCode => Object.hash(source, message, details);
 
   @override
   String toString() {
     return message;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    if (other is! ErrorMessage) return false;
+
+    return source == other.source &&
+        message == other.message &&
+        details == other.details;
   }
 }
