@@ -1,3 +1,8 @@
+## 0.5.0
+
+- Entire rewrite of this package with many new features
+- Drop `fast_equatable` dependency
+
 ## 0.4.0
 
 - Fix generic types nullability
