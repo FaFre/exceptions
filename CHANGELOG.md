@@ -1,3 +1,7 @@
+## 0.6.0
+
+- Final rewrite to enable pattern matching of `Result` with `Success` or `Failure`
+
 ## 0.5.0
 
 - Entire rewrite of this package with many new features

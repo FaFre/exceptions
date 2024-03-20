@@ -5,34 +5,31 @@ void main() {
   group('constructor', () {
     test('with error', () {
       const error = ErrorMessage(source: 't', message: 'm');
-      const result = Result.failure(error);
+      final result = Result.failure(error);
 
       expect(result.isSuccess, isFalse);
       expect(result.error, equals(error));
-      expect(result.value, isNull);
       expect(result.valueOrNull, isNull);
-      expect(() => result.valueOrException, throwsA(isA<ResultException>()));
+      expect(() => result.value, throwsA(isA<ResultException>()));
     });
 
     test('with error non-null type', () {
       const error = ErrorMessage(source: 't', message: 'm');
-      const result = Result<int>.failure(error);
+      final result = Result<int>.failure(error);
 
       expect(result.isSuccess, isFalse);
       expect(result.error, equals(error));
-      expect(() => result.value, throwsA(isA<TypeError>()));
       expect(result.valueOrNull, isNull);
-      expect(() => result.valueOrException, throwsA(isA<ResultException>()));
+      expect(() => result.value, throwsA(isA<ResultException>()));
     });
 
     test('with value', () {
-      const result = Result.success(1);
+      final result = Result.success(1);
 
       expect(result.isSuccess, isTrue);
       expect(result.error, isNull);
       expect(result.value, equals(1));
       expect(result.valueOrNull, equals(1));
-      expect(result.valueOrException, equals(1));
     });
   });
 
