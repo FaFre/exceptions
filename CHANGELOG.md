@@ -1,3 +1,7 @@
+## 0.6.1
+
+- Provide `toString()` for `ResultException`
+
 ## 0.6.0
 
 - Final rewrite to enable pattern matching of `Result` with `Success` or `Failure`
